@@ -43,7 +43,7 @@ public class OrderForm extends JPanel {
                 String cityFrom = cityFromField.getText();
                 try {
                     OrderService orderService = new OrderService();
-                    ResponseEntity<String> response = orderService.fetchOrder(new CreateOrderRequest("Waiting" ,username, nameOfProduct, price, kg, cityTo, cityFrom));
+                    ResponseEntity<String> response = orderService.fetchOrder(new CreateOrderRequest( username, nameOfProduct, price, kg, cityTo, cityFrom));
                     JOptionPane.showMessageDialog(OrderForm.this, response.getBody(), "Successfully created an order!", JOptionPane.INFORMATION_MESSAGE);
                 } catch (HttpClientErrorException exception) {
                     JOptionPane.showMessageDialog(OrderForm.this, exception.getResponseBodyAsString(), "Server Error", JOptionPane.ERROR_MESSAGE);
