@@ -1,8 +1,6 @@
 package com.example.couriercompany.gui.form;
 
-import com.example.couriercompany.gui.form.CourierRegistrationForm;
-import com.example.couriercompany.gui.form.RegistrationForm;
-import com.example.couriercompany.gui.form.UserMenu;
+import com.example.couriercompany.gui.model.OrderTableModel;
 import com.example.couriercompany.gui.service.AuthenticationService;
 import com.example.couriercompany.payload.LoginRequestDTO;
 import org.springframework.http.ResponseEntity;
@@ -92,8 +90,9 @@ public class LoginForm extends JPanel {
     }
 
     private void openCourierMenu(String username) {
-        CourierMenu courierMenu = new CourierMenu(username);
-        openMenuDialog(username, courierMenu);
+        OrderTableModel orderTableModel = fetchOrderTableModel();
+            CourierMenu courierMenu = new CourierMenu();
+            openMenuDialog(username, courierMenu);
     }
 
     private void openAdminMenu(String username) {
@@ -138,5 +137,11 @@ public class LoginForm extends JPanel {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
+    }
+
+    // Placeholder method for fetching OrderTableModel data
+    private OrderTableModel fetchOrderTableModel() {
+        // Implement this method to fetch the OrderTableModel from your data source
+        return null; // Placeholder return
     }
 }

@@ -49,30 +49,15 @@ public class UserMenu extends JPanel {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
 
         JButton createOrderButton = new JButton("Create Order");
-        createOrderButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createOrderForm(username);
-            }
-        });
+        createOrderButton.addActionListener(e -> createOrderForm(username));
         buttonPanel.add(createOrderButton);
 
         JButton fetchPastDeliveriesButton = new JButton("Fetch Past Deliveries");
-        fetchPastDeliveriesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fetchDeliveriesPastDate((UtilDateModel) datePicker.getModel(), username);
-            }
-        });
-        buttonPanel.add(fetchPastDeliveriesButton); // Add fetchPastDeliveriesButton to buttonPanel
+        fetchPastDeliveriesButton.addActionListener(e -> fetchDeliveriesPastDate((UtilDateModel) datePicker.getModel(), username));
+        buttonPanel.add(fetchPastDeliveriesButton);
 
         JButton fetchRecentDeliveriesButton = new JButton("Fetch Recent Deliveries");
-        fetchRecentDeliveriesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fetchDeliveriesMadeRecentFiveDays(username);
-            }
-        });
+        fetchRecentDeliveriesButton.addActionListener(e -> fetchDeliveriesMadeRecentFiveDays(username));
         buttonPanel.add(fetchRecentDeliveriesButton);
 
         add(buttonPanel, BorderLayout.CENTER);
