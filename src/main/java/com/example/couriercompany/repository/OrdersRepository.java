@@ -11,6 +11,11 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
 
     @Query("SELECT o FROM Orders o " +
+            "WHERE (:username IS NULL OR o.registrations.username = :username) " +
+            "AND (:statusId IS NULL OR o.status.id = :statusId) ")
+    List<Orders> findAndFilterDeliveries(String username, Long statusId);
+
+    @Query("SELECT o FROM Orders o " +
             "WHERE o.registrations.username = :username " +
             "AND (cast(:afterDate as timestamp) IS NULL OR o.orderedAt >= :afterDate) " +
             "AND (cast(:fiveDays as timestamp) IS NULL OR o.orderedAt BETWEEN :fiveDays AND CURRENT_TIMESTAMP)")

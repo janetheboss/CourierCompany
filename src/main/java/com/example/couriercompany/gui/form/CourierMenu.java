@@ -33,7 +33,7 @@ public class CourierMenu extends JPanel {
         orderTable.setModel(tableModel);
     }
 
-    private void fetchOrders(String username) {
+    private void fetchOrders() {
         try {
             ResponseEntity<List<OrderDTO>> response = orderService.fetchOrdersFiltered(username, statusId);
             setTableData(Objects.requireNonNull(response.getBody()));

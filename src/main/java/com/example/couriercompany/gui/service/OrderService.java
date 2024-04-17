@@ -44,4 +44,24 @@ public class OrderService {
         return restTemplate.exchange(url, HttpMethod.GET, entity,new ParameterizedTypeReference<>() {
         });
     }
+
+    public ResponseEntity<List<OrderDTO>> fetchOrdersFiltered(String username, Long statusId) {
+        HttpHeaders headers = new HttpHeaders();
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/orders/all");
+        if (username != null) {
+            builder.queryParam("username", username);
+        }
+        if (statusId != null && statusId > 0) {
+            builder.queryParam("statusId", statusId);
+        }
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = builder.toUriString();
+
+        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        });
+    }
 }

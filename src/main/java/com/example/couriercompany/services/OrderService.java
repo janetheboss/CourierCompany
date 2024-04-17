@@ -64,6 +64,10 @@ private final StatusRepository statusRepository;
     }
 
 
+    public List<OrderDTO> filterOrders(String username, Long statusId) {
+        return mapOrders(ordersRepository.findAndFilterDeliveries(username, statusId));
+    }
+
     private List<OrderDTO> mapOrders(List<Orders> orders) {
         List<OrderDTO> orderDTOS = new ArrayList<>();
         for (Orders order: orders) {

@@ -11,11 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OrderForm extends JPanel {
-    private JTextField nameOfProductField;
-    private JTextField priceField;
-    private JTextField kgField;
-    private JTextField cityToField;
-    private JTextField cityFromField;
+    private final JTextField nameOfProductField;
+    private final JTextField priceField;
+    private final JTextField kgField;
+    private final JTextField cityToField;
+    private final JTextField cityFromField;
     private JButton createButton;
 
     public OrderForm(String username) {
@@ -33,21 +33,18 @@ public class OrderForm extends JPanel {
         cityFromField = new JTextField(20);
         createButton = new JButton("Create Order");
 
-        createButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nameOfProduct = nameOfProductField.getText();
-                Double price = Double.parseDouble(priceField.getText());
-                Double kg = Double.parseDouble(kgField.getText());
-                String cityTo = cityToField.getText();
-                String cityFrom = cityFromField.getText();
-                try {
-                    OrderService orderService = new OrderService();
-                    ResponseEntity<String> response = orderService.fetchOrder(new CreateOrderRequest( username, nameOfProduct, price, kg, cityTo, cityFrom));
-                    JOptionPane.showMessageDialog(OrderForm.this, response.getBody(), "Successfully created an order!", JOptionPane.INFORMATION_MESSAGE);
-                } catch (HttpClientErrorException exception) {
-                    JOptionPane.showMessageDialog(OrderForm.this, exception.getResponseBodyAsString(), "Server Error", JOptionPane.ERROR_MESSAGE);
-                }
+        createButton.addActionListener(e -> {
+            String nameOfProduct = nameOfProductField.getText();
+            Double price = Double.parseDouble(priceField.getText());
+            Double kg = Double.parseDouble(kgField.getText());
+            String cityTo = cityToField.getText();
+            String cityFrom = cityFromField.getText();
+            try {
+                OrderService orderService = new OrderService();
+                ResponseEntity<String> response = orderService.fetchOrder(new CreateOrderRequest( username, nameOfProduct, price, kg, cityTo, cityFrom));
+                JOptionPane.showMessageDialog(OrderForm.this, response.getBody(), "Successfully created an order!", JOptionPane.INFORMATION_MESSAGE);
+            } catch (HttpClientErrorException exception) {
+                JOptionPane.showMessageDialog(OrderForm.this, exception.getResponseBodyAsString(), "Server Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

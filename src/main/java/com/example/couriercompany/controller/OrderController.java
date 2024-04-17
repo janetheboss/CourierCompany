@@ -25,13 +25,21 @@ public class OrderController {
         }
 
         @GetMapping("")
-        public ResponseEntity<List<OrderDTO>> filterUserDeliveries(
+        public ResponseEntity<List<OrderDTO>> filterUserOrders(
                 @RequestParam String username,
                 @RequestParam(required = false) LocalDate afterDate,
                 @RequestParam(required = false) LocalDate fiveDays
         ) {
             return ResponseEntity.ok(orderService.getAllOrdersFiltered(username, afterDate, fiveDays));
         }
+
+    @GetMapping("all")
+    public ResponseEntity<List<OrderDTO>> filterOrders(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Long statusId
+    ) {
+        return ResponseEntity.ok(orderService.filterOrders(username, statusId));
+    }
 
     }
 

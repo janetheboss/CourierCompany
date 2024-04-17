@@ -1,6 +1,5 @@
 package com.example.couriercompany.gui.form;
 
-import com.example.couriercompany.gui.form.OrderForm;
 import com.example.couriercompany.gui.model.OrderTableModel;
 import com.example.couriercompany.gui.utils.DateLabelFormatter;
 import com.example.couriercompany.gui.service.OrderService;
@@ -13,8 +12,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +21,7 @@ import java.util.Properties;
 public class UserMenu extends JPanel {
 
     private final OrderService orderService;
-    private JDatePickerImpl datePicker;
+    private final JDatePickerImpl datePicker;
     private LocalDate afterDate = null;
     private LocalDate fiveDaysAgo = null;
     private final JTable orderTable;
