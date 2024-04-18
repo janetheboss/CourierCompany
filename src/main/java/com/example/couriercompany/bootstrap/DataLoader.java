@@ -1,5 +1,6 @@
 package com.example.couriercompany.bootstrap;
 
+import com.example.couriercompany.model.Curier;
 import com.example.couriercompany.model.Registrations;
 import com.example.couriercompany.model.Status;
 import com.example.couriercompany.repository.RegistrationsRepository;
@@ -22,15 +23,15 @@ public class DataLoader implements CommandLineRunner {
         if (registrationsRepository.count() == 0) {
             Status waiting = new Status();
             waiting.setStatusType("Waiting");
-            waiting.setStatusInfo("DASDASDASDA");
+            waiting.setStatusInfo("Waiting For Shipment");
 
             Status inProgress = new Status();
             inProgress.setStatusInfo("DASDAD");
-            inProgress.setStatusType("In progress");
+            inProgress.setStatusType("Shipment in progress");
 
             Status ready = new Status();
             ready.setStatusType("Ready");
-            ready.setStatusInfo("DADADA");
+            ready.setStatusInfo("Ready");
 
             statusRepository.saveAll(List.of(waiting, inProgress, ready));
 
@@ -41,7 +42,15 @@ public class DataLoader implements CommandLineRunner {
             registrations.setTelephoneNumber("+35945345345");
             registrations.setAddressForDelivery("Vkushti");
 
+            Registrations registrations1 = new Registrations();
+            registrations.setRole("user");
+            registrations.setUsername("kiro");
+            registrations.setPassword("kiro");
+            registrations.setTelephoneNumber("+35945345345");
+            registrations.setAddressForDelivery("Vkushti");
+
             registrationsRepository.saveAll(List.of(registrations));
+            registrationsRepository.saveAll(List.of(registrations1));
 
         }
     }

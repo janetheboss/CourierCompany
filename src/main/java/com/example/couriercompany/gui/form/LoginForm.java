@@ -138,10 +138,7 @@ public class LoginForm extends JPanel {
             frame.setVisible(true);
         });
     }
-
-    // Placeholder method for fetching OrderTableModel data
     private OrderTableModel fetchOrderTableModel() {
-        // Implement this method to fetch the OrderTableModel from your data source
-        return null; // Placeholder return
+        return null;
     }
 }

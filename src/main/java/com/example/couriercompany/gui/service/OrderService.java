@@ -1,6 +1,7 @@
 package com.example.couriercompany.gui.service;
 import com.example.couriercompany.payload.CreateOrderRequest;
 import com.example.couriercompany.payload.OrderDTO;
+import com.example.couriercompany.payload.OrderRequestDTO;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -63,5 +64,15 @@ public class OrderService {
 
         return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
+    }
+    public ResponseEntity<OrderDTO> fetchUpdateDelivery(Long deliveryId, OrderRequestDTO requestDTO) {
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<OrderRequestDTO> request = new HttpEntity<>(requestDTO, headers);
+        return restTemplate.exchange("orders/" + deliveryId,
+                HttpMethod.PUT,
+                request,
+                OrderDTO.class);
     }
 }

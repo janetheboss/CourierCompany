@@ -6,9 +6,11 @@ import com.example.couriercompany.model.Registrations;
 import com.example.couriercompany.model.Status;
 import com.example.couriercompany.payload.CreateOrderRequest;
 import com.example.couriercompany.payload.OrderDTO;
+import com.example.couriercompany.payload.OrderRequestDTO;
 import com.example.couriercompany.repository.OrdersRepository;
 import com.example.couriercompany.repository.RegistrationsRepository;
 import com.example.couriercompany.repository.StatusRepository;
+import jakarta.persistence.criteria.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class OrderService {
 private final OrdersRepository ordersRepository;
 private final RegistrationsRepository registrationsRepository;
 private final StatusRepository statusRepository;
+
 
     public String createOrder(CreateOrderRequest request) {
         Orders orders = new Orders();
@@ -77,5 +80,20 @@ private final StatusRepository statusRepository;
         }
         return orderDTOS;
     }
+    public OrderDTO updateDelivery(Long id, OrderRequestDTO requestDTO) {
+        Orders orders = ordersRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+        Status status = statusRepository
+                .findByStatusType(requestDTO.status()).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+        orders.setNameOfProduct(requestDTO.nameOfProduct());
+        orders.setPrice(requestDTO.price());
+        orders.setKg(requestDTO.kg());
+        orders.setCityTo(requestDTO.cityTo());
+        orders.setCityFrom(requestDTO.cityFrom());
 
+        orders.setStatus(status);
+        ordersRepository.save(orders);
+       return new OrderDTO(orders.getCityTo(), status.getStatusInfo(),
+               orders.getNameOfProduct(), orders.getKg(), orders.getPrice(), orders.getCityTo(), orders.getCityFrom());
+    }
 }

@@ -1,11 +1,10 @@
 package com.example.couriercompany.controller;
 
-import com.example.couriercompany.payload.CreateOrderRequest;
-import com.example.couriercompany.payload.CreateRegistrationRequest;
-import com.example.couriercompany.payload.LoginRequestDTO;
-import com.example.couriercompany.payload.OrderDTO;
+import com.example.couriercompany.payload.*;
 import com.example.couriercompany.services.AuthenticationService;
 import com.example.couriercompany.services.OrderService;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +39,11 @@ public class OrderController {
     ) {
         return ResponseEntity.ok(orderService.filterOrders(username, statusId));
     }
-
+    @PutMapping("{deliveryId}")
+    public ResponseEntity<OrderDTO> updateDeliveryById(@PathVariable Long deliveryId,
+                                                          @RequestBody OrderRequestDTO requestDTO) {
+        return ResponseEntity.ok(orderService.updateDelivery(deliveryId, requestDTO));
+        }
     }
 
 

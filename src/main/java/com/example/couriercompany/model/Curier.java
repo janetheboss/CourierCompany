@@ -2,7 +2,6 @@ package com.example.couriercompany.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Table(name="courier")
 @Getter
@@ -21,7 +20,6 @@ public class Curier {
     @ManyToOne
     @JoinColumn(name = "office_id")
     private Office office;
-
     @OneToOne
     @JoinColumn(name = "reg_id")
     private Registrations registrations ;

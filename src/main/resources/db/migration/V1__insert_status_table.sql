@@ -1,5 +1,5 @@
 INSERT INTO status (status_type, status_info)
 VALUES
-    ('Waiting', 'Chakam manqk'),
-    ('In progress', 'Abe chakai be'),
-    ('Ready', 'Gotovo be');
+    ('Waiting', 'Waiting For response'),
+    ('In progress', 'Shipment in Progress'),
+    ('Ready', 'Ready To get');

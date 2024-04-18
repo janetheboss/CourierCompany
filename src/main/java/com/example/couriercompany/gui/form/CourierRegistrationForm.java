@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 
 public class CourierRegistrationForm extends JFrame implements ActionListener {
     private JTextField usernameField, passwordField, courierNameField, courierNumberField, yearsOfExperienceField, serviceAreaField;
-    private JButton registerButton, backButton;
+    private JButton registerButton;
     private CurierService curierService;
     private AuthenticationService authenticationService;
 
@@ -58,9 +58,6 @@ public class CourierRegistrationForm extends JFrame implements ActionListener {
         registerButton.addActionListener(this);
         add(registerButton);
 
-        backButton = new JButton("Back");
-        backButton.addActionListener(this);
-        add(backButton);
 
         curierService = new CurierService();
         authenticationService = new AuthenticationService(); // Initialize AuthenticationService
