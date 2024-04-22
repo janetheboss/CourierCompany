@@ -14,7 +14,7 @@ public class AuthenticationService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/api/v1/auth/register";
+        String url = "http://localhost:8081/api/v1/auth/register";
 
         return restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
     }
@@ -27,7 +27,7 @@ public class AuthenticationService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/api/v1/auth/login";
+        String url = "http://localhost:8081/api/v1/auth/login";
 
         return restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
     }
@@ -38,7 +38,7 @@ public class AuthenticationService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/api/v1/auth/" + username;
+        String url = "http://localhost:8081/api/v1/auth/" + username;
 
         return restTemplate.exchange(url, HttpMethod.GET, null, String.class);
     }

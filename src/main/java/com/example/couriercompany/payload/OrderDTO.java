@@ -1,8 +1,8 @@
 package com.example.couriercompany.payload;
 
 public record OrderDTO(
-        Long statusId,
         Long id,
+        Long orderId,
         String registration,
         String status,
         String nameOfProduct,

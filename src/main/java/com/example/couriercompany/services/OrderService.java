@@ -81,30 +81,32 @@ private final StatusRepository statusRepository;
         return orderDTOS;
     }
     public OrderDTO updateDelivery(Long id, OrderRequestDTO requestDTO) {
-        Orders orders = ordersRepository
-                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "Id", id));
-        Status status=orders.getStatus();
+        Orders orders = ordersRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", "Id", id));
+
+        Status newStatus = statusRepository.findByStatusType(requestDTO.status())
+                .orElseThrow(() -> new ResourceNotFoundException("Status", "Type", requestDTO.status()));
+
         orders.setNameOfProduct(requestDTO.nameOfProduct());
         orders.setPrice(requestDTO.price());
         orders.setKg(requestDTO.kg());
         orders.setCityTo(requestDTO.cityTo());
         orders.setCityFrom(requestDTO.cityFrom());
 
-        orders.setStatus(status);
+        orders.setStatus(newStatus);
+
         ordersRepository.save(orders);
-       return new OrderDTO(orders.getStatus().getId(), orders.getId(),orders.getCityTo(), status.getStatusInfo(),
-               orders.getNameOfProduct(), orders.getKg(), orders.getPrice(), orders.getCityTo(), orders.getCityFrom());
-    }
-    public OrderDTO updateDeliveryStatus(Long id, Long statusId)  {
-        Orders orders = ordersRepository
-                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
 
-        Status status = statusRepository.findById(statusId)
-                .orElseThrow(() -> new ResourceNotFoundException("Status", "Id", statusId));
-
-        orders.setStatus(status);
-
-        return new OrderDTO(orders.getStatus().getId(), orders.getId(),orders.getCityTo(), status.getStatusInfo(),
-                orders.getNameOfProduct(), orders.getKg(), orders.getPrice(), orders.getCityTo(), orders.getCityFrom());
+        return new OrderDTO(
+                orders.getId(),
+                orders.getId(),
+                orders.getRegistrations().getUsername(),
+                newStatus.getStatusInfo(),
+                orders.getNameOfProduct(),
+                orders.getPrice(),
+                orders.getKg(),
+                orders.getCityTo(),
+                orders.getCityFrom()
+        );
     }
 }

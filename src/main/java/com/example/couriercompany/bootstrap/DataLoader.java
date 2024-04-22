@@ -23,11 +23,11 @@ public class DataLoader implements CommandLineRunner {
         if (registrationsRepository.count() == 0) {
             Status waiting = new Status();
             waiting.setStatusType("Waiting");
-            waiting.setStatusInfo("Waiting For Shipment");
+            waiting.setStatusInfo("Waiting");
 
             Status inProgress = new Status();
-            inProgress.setStatusInfo("DASDAD");
-            inProgress.setStatusType("Shipment in progress");
+            inProgress.setStatusInfo("Shipping");
+            inProgress.setStatusType("Shipping");
 
             Status ready = new Status();
             ready.setStatusType("Ready");
@@ -41,7 +41,6 @@ public class DataLoader implements CommandLineRunner {
             registrations.setPassword("jane");
             registrations.setTelephoneNumber("+35945345345");
             registrations.setAddressForDelivery("Vkushti");
-
 
             registrationsRepository.saveAll(List.of(registrations));
 
