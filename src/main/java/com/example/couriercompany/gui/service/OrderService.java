@@ -42,7 +42,7 @@ public class OrderService {
         RestTemplate restTemplate = new RestTemplate();
         String url = builder.toUriString();
 
-        return restTemplate.exchange(url, HttpMethod.GET, entity,new ParameterizedTypeReference<>() {
+        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
     }
 
@@ -65,14 +65,27 @@ public class OrderService {
         return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
     }
+
     public ResponseEntity<OrderDTO> fetchUpdateDelivery(Long deliveryId, OrderRequestDTO requestDTO) {
         HttpHeaders headers = new HttpHeaders();
         RestTemplate restTemplate = new RestTemplate();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<OrderRequestDTO> request = new HttpEntity<>(requestDTO, headers);
-        return restTemplate.exchange("orders/" + deliveryId,
+
+        String baseUrl = "http://localhost:8080/api/v1";
+        String url = baseUrl + "/orders/" + deliveryId;
+
+        return restTemplate.exchange(url,
                 HttpMethod.PUT,
                 request,
                 OrderDTO.class);
     }
+    public ResponseEntity<OrderDTO> fetchUpdateDeliveryStatus(Long deliveryId, long statusId) {
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String url ="deliveries/" + deliveryId + "/statuses/" + statusId;
+        return restTemplate.exchange(url, HttpMethod.PUT, entity, OrderDTO.class);
+    }
 }
+

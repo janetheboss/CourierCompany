@@ -42,15 +42,8 @@ public class DataLoader implements CommandLineRunner {
             registrations.setTelephoneNumber("+35945345345");
             registrations.setAddressForDelivery("Vkushti");
 
-            Registrations registrations1 = new Registrations();
-            registrations.setRole("user");
-            registrations.setUsername("kiro");
-            registrations.setPassword("kiro");
-            registrations.setTelephoneNumber("+35945345345");
-            registrations.setAddressForDelivery("Vkushti");
 
             registrationsRepository.saveAll(List.of(registrations));
-            registrationsRepository.saveAll(List.of(registrations1));
 
         }
     }

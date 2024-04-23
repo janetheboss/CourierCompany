@@ -74,7 +74,7 @@ private final StatusRepository statusRepository;
     private List<OrderDTO> mapOrders(List<Orders> orders) {
         List<OrderDTO> orderDTOS = new ArrayList<>();
         for (Orders order: orders) {
-            orderDTOS.add(new OrderDTO(order.getRegistrations().getUsername(),
+            orderDTOS.add(new OrderDTO(order.getStatus().getId(),order.getId(),order.getRegistrations().getUsername(),
                     order.getStatus().getStatusInfo(), order.getNameOfProduct(),
                     order.getPrice(), order.getKg(), order.getCityTo(), order.getCityFrom()));
         }
@@ -82,9 +82,8 @@ private final StatusRepository statusRepository;
     }
     public OrderDTO updateDelivery(Long id, OrderRequestDTO requestDTO) {
         Orders orders = ordersRepository
-                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
-        Status status = statusRepository
-                .findByStatusType(requestDTO.status()).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "Id", id));
+        Status status=orders.getStatus();
         orders.setNameOfProduct(requestDTO.nameOfProduct());
         orders.setPrice(requestDTO.price());
         orders.setKg(requestDTO.kg());
@@ -93,7 +92,19 @@ private final StatusRepository statusRepository;
 
         orders.setStatus(status);
         ordersRepository.save(orders);
-       return new OrderDTO(orders.getCityTo(), status.getStatusInfo(),
+       return new OrderDTO(orders.getStatus().getId(), orders.getId(),orders.getCityTo(), status.getStatusInfo(),
                orders.getNameOfProduct(), orders.getKg(), orders.getPrice(), orders.getCityTo(), orders.getCityFrom());
+    }
+    public OrderDTO updateDeliveryStatus(Long id, Long statusId)  {
+        Orders orders = ordersRepository
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        Status status = statusRepository.findById(statusId)
+                .orElseThrow(() -> new ResourceNotFoundException("Status", "Id", statusId));
+
+        orders.setStatus(status);
+
+        return new OrderDTO(orders.getStatus().getId(), orders.getId(),orders.getCityTo(), status.getStatusInfo(),
+                orders.getNameOfProduct(), orders.getKg(), orders.getPrice(), orders.getCityTo(), orders.getCityFrom());
     }
 }
