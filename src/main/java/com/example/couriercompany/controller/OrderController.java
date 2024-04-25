@@ -45,6 +45,11 @@ public class OrderController {
                                                           @RequestBody OrderRequestDTO requestDTO) {
         return ResponseEntity.ok(orderService.updateDelivery(deliveryId, requestDTO));
         }
+    @DeleteMapping("{deliveryId}")
+    public ResponseEntity<String> deleteOrder(@PathVariable String deliveryId){
+            orderService.deleteDelivery(Long.valueOf(deliveryId));
+            return ResponseEntity.ok("Deleted");
     }
+}
 
 
