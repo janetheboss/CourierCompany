@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDetailsPanel extends JPanel {
     private final JTextField nameOfProductField;
@@ -17,11 +19,13 @@ public class OrderDetailsPanel extends JPanel {
     private final JTextField cityFromField;
     private final JButton updateButton;
 
-    private final JComboBox<String> statusComboBox; // Dropdown box for status
+    private final JComboBox<String> statusComboBox;
 
     private final OrderService orderService;
 
     private final Long orderId;
+
+    private List<Long> selectedOrderIds = new ArrayList<>();
 
     public OrderDetailsPanel(OrderDTO orderDTO) {
         setLayout(new GridLayout(8, 2));
@@ -65,15 +69,14 @@ public class OrderDetailsPanel extends JPanel {
 
         // Update Button
         updateButton = new JButton("Update");
-        updateButton.addActionListener(this::updateOrder);
+        updateButton.addActionListener(this::updateOrders);
         add(updateButton);
 
-        // Order Service
         orderService = new OrderService();
         this.orderId = orderDTO.id();
     }
 
-    private void updateOrder(ActionEvent e) {
+    private void updateOrders(ActionEvent e) {
         try {
             String newStatus = (String) statusComboBox.getSelectedItem();
             String newNameOfProduct = nameOfProductField.getText();
@@ -81,13 +84,14 @@ public class OrderDetailsPanel extends JPanel {
             double newKg = Double.parseDouble(kgField.getText());
             String newCityTo = cityToField.getText();
             String newCityFrom = cityFromField.getText();
+
             OrderRequestDTO requestDTO = new OrderRequestDTO(newStatus, newNameOfProduct, newPrice, newKg, newCityTo, newCityFrom);
             ResponseEntity<OrderDTO> response = orderService.fetchUpdateDelivery(orderId, requestDTO);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 JOptionPane.showMessageDialog(this, "Order updated successfully!");
             } else {
-                JOptionPane.showMessageDialog(this, "Failed to update order.");
+                JOptionPane.showMessageDialog(this, "Failed to update order with ID: " + orderId);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter valid numeric values for price and kg.");

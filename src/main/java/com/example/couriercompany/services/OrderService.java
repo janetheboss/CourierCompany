@@ -11,6 +11,7 @@ import com.example.couriercompany.repository.OrdersRepository;
 import com.example.couriercompany.repository.RegistrationsRepository;
 import com.example.couriercompany.repository.StatusRepository;
 import jakarta.persistence.criteria.Order;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -92,21 +93,27 @@ private final StatusRepository statusRepository;
         orders.setKg(requestDTO.kg());
         orders.setCityTo(requestDTO.cityTo());
         orders.setCityFrom(requestDTO.cityFrom());
-
         orders.setStatus(newStatus);
 
-        ordersRepository.save(orders);
+        Orders updatedOrders = ordersRepository.save(orders);
 
         return new OrderDTO(
-                orders.getId(),
-                orders.getId(),
-                orders.getRegistrations().getUsername(),
+                updatedOrders.getId(),
+                updatedOrders.getId(),
+                updatedOrders.getRegistrations().getUsername(),
                 newStatus.getStatusInfo(),
-                orders.getNameOfProduct(),
-                orders.getPrice(),
-                orders.getKg(),
-                orders.getCityTo(),
-                orders.getCityFrom()
+                updatedOrders.getNameOfProduct(),
+                updatedOrders.getPrice(),
+                updatedOrders.getKg(),
+                updatedOrders.getCityTo(),
+                updatedOrders.getCityFrom()
         );
+    }
+
+    public void deleteDelivery(Long id) {
+        Orders order = ordersRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Delivery", "Id", id));
+
+        ordersRepository.delete(order);
     }
 }

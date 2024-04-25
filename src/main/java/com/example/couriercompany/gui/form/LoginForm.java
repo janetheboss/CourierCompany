@@ -96,8 +96,9 @@ public class LoginForm extends JPanel {
     }
 
     private void openAdminMenu(String username) {
-        //AdminMenu adminMenu = new AdminMenu(username);
-        //openMenuDialog(username, adminMenu);
+        OrderTableModel orderTableModel = fetchOrderTableModel();
+        AdminMenu adminMenu = new AdminMenu();
+        openMenuDialog(username, adminMenu);
     }
 
     private void openMenuDialog(String username, JPanel menuPanel) {

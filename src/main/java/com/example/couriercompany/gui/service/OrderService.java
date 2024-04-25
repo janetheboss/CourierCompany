@@ -19,7 +19,7 @@ public class OrderService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8081/api/v1/orders";
+        String url = "http://localhost:8080/api/v1/orders";
 
         return restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
     }
@@ -27,7 +27,7 @@ public class OrderService {
     public ResponseEntity<List<OrderDTO>> fetchUserOrders(String username, LocalDate afterDate, LocalDate fiveDays) {
         HttpHeaders headers = new HttpHeaders();
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/v1/orders");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/orders");
         if (afterDate != null) {
             builder.queryParam("afterDate", afterDate);
         }
@@ -49,7 +49,7 @@ public class OrderService {
     public ResponseEntity<List<OrderDTO>> fetchOrdersFiltered(String username, Long statusId) {
         HttpHeaders headers = new HttpHeaders();
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/v1/orders/all");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/orders/all");
         if (username != null) {
             builder.queryParam("username", username);
         }
@@ -72,7 +72,7 @@ public class OrderService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<OrderRequestDTO> request = new HttpEntity<>(requestDTO, headers);
 
-        String baseUrl = "http://localhost:8081/api/v1";
+        String baseUrl = "http://localhost:8080/api/v1";
         String url = baseUrl + "/orders/" + deliveryId;
 
         return restTemplate.exchange(url,
@@ -80,5 +80,16 @@ public class OrderService {
                 request,
                 OrderDTO.class);
     }
+    public ResponseEntity<Void> fetchDeleteOrder(Long deliveryId) {
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        String baseUrl = "http://localhost:8080/api/v1";
+        String url = baseUrl + "/orders/" + deliveryId;
+
+        return restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+    }
+
 }
 

@@ -14,7 +14,7 @@ public class CurierService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8081/api/v1/couriers";
+        String url = "http://localhost:8080/api/v1/couriers";
 
         return restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
     }
